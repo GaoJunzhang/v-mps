@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zgj.mps.dao.mapper.ResourceMapper">
+    <resultMap id="userDResourceResultMap" type="com.zgj.mps.bean.UserDResourceBean">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="pro_img" jdbcType="VARCHAR" property="proImg"/>
+        <result column="pro_video" jdbcType="VARCHAR" property="proVideo"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="INTEGER" property="endTime"/>
+        <result column="is_forever" jdbcType="SMALLINT" property="isForever"/>
+        <result column="device_id" jdbcType="VARCHAR" property="deviceId"/>
+    </resultMap>
+    <select id="reourceListByUid" resultMap="userDResourceResultMap" parameterType="java.lang.String">
+    SELECT r.*,ud.user_id,ud.start_time,ud.end_time,ud.is_forever,ud.device_id
+    from resource r ,device_resource dr,device d,user_device ud
+    where r.id=dr.resource_id
+    and dr.device_id=d.id
+    and d.id=ud.device_id
+    and ud.user_id=#{uid};
+</select>
+</mapper>
